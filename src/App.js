@@ -1,7 +1,9 @@
 import './styles.css';
 import { useReducer } from 'react'
+import DigitButton from './DigitButton.js'
+import OperationButton from './OperationButton.js'
 
-const ACTIONS = {
+export const ACTIONS = { //action break into actions with types and parameters
   ADD_DIGIT: 'add-digit',
   CHOOSE_OPERATION: 'choose-operation',
   CLEAR: 'clear',
@@ -9,14 +11,13 @@ const ACTIONS = {
   EVALUATE: 'evaluate'
 }
 
-function reducer(state, action){
+function reducer(state, {type, payload }){
   switch(type){
     case ACTIONS.ADD_DIGIT:
       return {
         ...state,
-        currentOperand: `${currentOperand}${payload.digit}`
+        currentOperand: `${state.currentOperand || "" } ${payload.digit}`,
       }
-    }
   }
 }
 
@@ -24,35 +25,35 @@ function App() {
 
   const [{currentOperand, previousOperand, operation}, dispatch] = useReducer(reducer, {}) //for doing the state much easier
 
-  dispatch({type: ACTIONS.ADD_DIGIT, payload: {digit}})
+  //dispatch({type: ACTIONS.ADD_DIGIT, payload: {digit}})
   return (
     <div className="calculator-grid">
       <div className="output">
-        <div className="previous-operand">{currentOperand}{operation}</div>
-        <div className="current-operand">{previousOperand}</div>
+        <div className="previous-operand">{previousOperand}{operation}</div>
+        <div className="current-operand">{currentOperand}</div>
       </div>
       <button className="span-two">AC</button>
       <button className="span-one">DEL</button>
-      <button className="span-one">/</button>
+      <OperationButton digit="/" dispatch={dispatch} />
 
-      <button className="span-one">1</button>
-      <button className="span-one">2</button>
-      <button className="span-one">3</button>
-      <button className="span-one">*</button>
+      <DigitButton digit="1" dispatch={dispatch} />
+      <DigitButton digit="2" dispatch={dispatch} />
+      <DigitButton digit="3" dispatch={dispatch} />
+      <OperationButton digit="*" dispatch={dispatch} />
 
-      <button className="span-one">4</button>
-      <button className="span-one">5</button>
-      <button className="span-one">6</button>
-      <button className="span-one">+</button>
+      <DigitButton digit="4" dispatch={dispatch} />
+      <DigitButton digit="5" dispatch={dispatch} />
+      <DigitButton digit="6" dispatch={dispatch} />
+      <OperationButton digit="+" dispatch={dispatch} />
 
-      <button className="span-one">7</button>
-      <button className="span-one">8</button>
-      <button className="span-one">9</button>
-      <button className="span-one">-</button>
+      <DigitButton digit="7" dispatch={dispatch} />
+      <DigitButton digit="8" dispatch={dispatch} />
+      <DigitButton digit="9" dispatch={dispatch} />
+      <OperationButton digit="-" dispatch={dispatch} />
 
-      <button className="span-two">.</button>
-      <button className="span-one">0</button>
-      <button className="span-one">=</button>
+      <DigitButton digit="." dispatch={dispatch} />
+      <DigitButton digit="0" dispatch={dispatch} />
+      <button className="span-two">=</button>
     </div>
   );
 }
