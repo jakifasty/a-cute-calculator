@@ -7,6 +7,8 @@ To run app via server,
 
 ![image](https://user-images.githubusercontent.com/44364350/218203889-387e975a-0842-490d-a02e-9a2670685fe9.png)
 
+![image](https://user-images.githubusercontent.com/44364350/218204139-9b5cae4c-28ff-4ea7-a702-05d28cc954aa.png)
+
 ## Available Scripts
 
 In the project directory, you can run:
