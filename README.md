@@ -1,6 +1,11 @@
 # Getting Started with A Cute Calculator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+To run app via server, 
+
+`npm install -g serve`
+`serve -s build`
+
+![image](https://user-images.githubusercontent.com/44364350/218203889-387e975a-0842-490d-a02e-9a2670685fe9.png)
 
 ## Available Scripts
 
