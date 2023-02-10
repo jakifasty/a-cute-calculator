@@ -1,8 +1,13 @@
 # Getting Started with A Cute Calculator
 
-To run app via server, 
+To run app via server, first run the app for production
+
+`npm run build`
+
+then install, build and run the server
 
 `npm install -g serve`
+
 `serve -s build`
 
 ![image](https://user-images.githubusercontent.com/44364350/218203889-387e975a-0842-490d-a02e-9a2670685fe9.png)
