@@ -14,6 +14,13 @@ export const ACTIONS = { //action break into actions with types and parameters
 function reducer(state, {type, payload }){ //this includes all the excepions and logic when clicking buttons
   switch(type){
     case ACTIONS.ADD_DIGIT:
+      if(state.overwrite){
+        return{
+          ...state,
+          currentOperand: payload.digit,
+          overwrite: false, //overwrite flag 
+        }
+      }
       if (payload.digit === "0" && state.currentOperand === "0") return state
       if (payload.digit === "." && state.currentOperand.includes(".")) return state
 
@@ -48,18 +55,43 @@ function reducer(state, {type, payload }){ //this includes all the excepions and
         currentOperand: null,
       }
     case ACTIONS.DELETE_DIGIT:
-      return {}
+      if(state.overwrite){
+        return{
+          ...state,
+          overwrite: false,
+          currentOperand: null
+        }
+      }
+      if(state.currentOperand == null) return state
+      if(state.currentOperand == 1){
+        console.log("previousOperand", state.previousOperand)
+        return{ ...state, currentOperand: null} //we do this and not return empty string to keep the state
+      }
+      return{
+        ...state,
+        currentOperand: state.currentOperand.slice(0, -1)
+      }
     case ACTIONS.EVALUATE:
       if (state.currentOperand == null || state.previousOperand == null || state.operation == null){
         return state
       }
       return{
         ...state,
+        overwrite: true, //set flag to true as next time we ADD_DIGIT we'll overwrite the value
         previousOperand: null,
         operation: null,
         currentOperand: evaluate(state),
       }
   }
+}
+
+const INTEGER_FORMAT = new Intl.NumberFormat("se", {maximumFractionDigits: 0,}) //chnage keyboard index according to country/keyboard type
+
+function formatOperand(operand){
+  if(operand == null) return
+  const [integer, decimal] = operand.split('.')
+  if (decimal == null) return INTEGER_FORMAT.format(integer)
+  return `${INTEGER_FORMAT.format(integer)}.${decimal}` 
 }
 
 function evaluate({currentOperand, previousOperand, operation}){ // state -> {currentOperand, previousOperand, operation}; this function implements all the logic for making the operations
@@ -88,8 +120,8 @@ function App() {
   return (
     <div className="calculator-grid">
       <div className="output">
-        <div className="previous-operand">{previousOperand}{operation}</div>
-        <div className="current-operand">{currentOperand}</div>
+        <div className="previous-operand">{formatOperand(previousOperand)}{operation}</div>
+        <div className="current-operand">{formatOperand(currentOperand)}</div>
       </div>
       <button className="span-two" onClick={() => dispatch({type: ACTIONS.CLEAR})}>AC</button>
       <button className="span-one" onClick={() => dispatch({type: ACTIONS.DELETE_DIGIT})}>DEL</button>
@@ -110,7 +142,7 @@ function App() {
       <DigitButton digit="9" dispatch={dispatch} />
       <OperationButton operation="-" dispatch={dispatch} />
 
-      <DigitButton digit="." dispatch={dispatch} />
+      <DigitButton digit="." dispatch={dispatch} /> 
       <DigitButton digit="0" dispatch={dispatch} />
       <button className="span-two" onClick={() => dispatch({type: ACTIONS.EVALUATE})}>=</button>
     </div>
