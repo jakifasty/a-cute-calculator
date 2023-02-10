@@ -14,12 +14,12 @@ export const ACTIONS = { //action break into actions with types and parameters
 function reducer(state, {type, payload }){
   switch(type){
     case ACTIONS.ADD_DIGIT:
-      if (payload.digit === "0" && state.currentOperand === "0") { console.log("working? no"); return state}
-      if (payload.digit == "." && state.currentOperand.includes(".")) {return state}
+      if (payload.digit === "0" && state.currentOperand === "0") {return state}
+      if (payload.digit === "." && state.currentOperand.includes(".")) {return state}
 
       return {
         ...state,
-        currentOperand: `${state.currentOperand || "" } ${payload.digit}`,
+        currentOperand: `${state.currentOperand || "" }${payload.digit}`,
       }
     
     case ACTIONS.CLEAR:
