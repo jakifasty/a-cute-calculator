@@ -7,7 +7,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
-    background: linear-gradient(to left, #00AAFD, #00FF6F);
+    background: linear-gradient(to left, green, #00FF6F);
 }
 
 .calculator-grid{
@@ -52,6 +52,11 @@ body {
 .output .previous-operand{
     color: white;
     font-size: medium;
+}
+
+.output .current-operand{
+    color: white;
+    font-size: large;
 }
 
 
