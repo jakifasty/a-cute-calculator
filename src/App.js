@@ -26,24 +26,24 @@ function reducer(state, {type, payload }){
       return {}
     
     case ACTIONS.CHOOSE_OPERATION:
-      if (state.currentOperand == null && state.previousOperand == null){
-        return state
+      if (state.currentOperand == null && state.previousOperand == null){ //if no number before operation
+        return state //return state
       }
-      if (state.previousOperand == null){
+      if (state.previousOperand == null){ //after typing numbers, we need to add operation and place it in 
         return {
           ...state,
           operation: payload.operation,
-          previousOperand: state.currentOperation,
+          previousOperand: state.currentOperand,
           currentOperand: null,
         }
       }
-      return{
+      return{ //default action
         ...state,
         operation: payload.operation,
         previousOperand: evaluate(state),
         currentOperand: null,
       }
-    case ACTIONS.CLEAR:
+    case ACTIONS.DELETE_DIGIT:
       return {}
   }
 }
@@ -71,7 +71,6 @@ function App() {
 
   const [{currentOperand, previousOperand, operation}, dispatch] = useReducer(reducer, {}) //for doing the state much easier
 
-  //dispatch({type: ACTIONS.ADD_DIGIT, payload: {digit}})
   return (
     <div className="calculator-grid">
       <div className="output">
