@@ -22,6 +22,7 @@ function reducer(state, {type, payload }){ //this includes all the excepions and
         }
       }
       if (payload.digit === "0" && state.currentOperand === "0") return state
+      if (payload.digit === "." && state.currentOperand == null) return state
       if (payload.digit === "." && state.currentOperand.includes(".")) return state
 
       return {
